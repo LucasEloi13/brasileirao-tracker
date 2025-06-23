@@ -1,0 +1,13 @@
+{
+	"name": "brasileirao-tracker-devcontainer",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+	"forwardPorts": [
+		5432,
+		9000,
+		9001,
+		8080
+	]
+    // ,"postCreateCommand": "pip install -r requirements.txt"
+}

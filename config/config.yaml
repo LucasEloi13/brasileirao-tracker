@@ -1,0 +1,14 @@
+base_url: "https://api.football-data.org/v4"
+endpoint:
+  competitions: 
+    path: /competitions
+  competition_details:
+    path: /competitions/{id}
+  teams: 
+    path: /competitions/{id}/teams
+  matches: 
+    path: /competitions/{id}/matches
+  standings: 
+    path: /competitions/{id}/standings
+
+brasileirao_id: 2013
