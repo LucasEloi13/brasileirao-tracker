@@ -9,5 +9,5 @@ def gerar_s3_key(base_dir, tabela, formato, data=None):
     data_str = data.strftime('%Y-%m-%d')
     # hora_str = data.strftime('%Y%m%dT%H%MZ')
     
-    key = f"{base_dir}/api_football/{tabela}/dt={data_str}/.{formato}"
+    key = f"{base_dir}/api_football/{tabela}/dt={data_str}.{formato}"
     return key

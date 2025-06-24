@@ -8,26 +8,27 @@ import os
 from botocore.exceptions import ClientError
 import logging
 
-class S3Uploader: 
+class S3Client: 
     def __init__(self, config):
         self.bucket_name = config.get("S3_BUCKET_NAME")
         self.s3_endpoint_url = config.get("S3_DATALAKE_ENDPOINT_URL")
         self.aws_access_key_id = config.get("AWS_ACCESS_KEY_ID")
         self.aws_secret_access_key = config.get("AWS_SECRET_ACCESS_KEY")
+        region = config.get('AWS_REGION', 'us-east-1')
         # self.config = config
 
         try:
-            logging.info("Inicializando S3Uploader com bucket: %s", self.bucket_name)
+            logging.info("Inicializando S3Client com bucket: %s", self.bucket_name)
             self.s3 = boto3.client(
                 's3',
                 endpoint_url=self.s3_endpoint_url,
                 aws_access_key_id=self.aws_access_key_id,
                 aws_secret_access_key=self.aws_secret_access_key,
-                region_name='us-east-1'  # Usar 'us-east-1' como padrão
+                region_name=region  # Usar 'us-east-1' como padrão
             )
-            logging.info("S3Uploader inicializado para bucket: %s", self.bucket_name)
+            logging.info("S3Client inicializado para bucket: %s", self.bucket_name)
         except Exception as e:
-            logging.error("Erro ao inicializar S3Uploader: %s", e)
+            logging.error("Erro ao inicializar S3Client: %s", e)
             raise e
     def upload_json(self, data, key):
         """Envia um dicionário JSON para o bucket com o prefixo (key) especificado"""
@@ -85,3 +86,13 @@ class S3Uploader:
             else:
                 logging.error("Erro ao criar bucket: %s", e)
                 raise e
+            
+    def delete_object(self, key):
+        """Deleta um objeto do bucket S3"""
+        try:
+            logging.info("Deletando objeto %s/%s", self.bucket_name, key)
+            self.s3.delete_object(Bucket=self.bucket_name, Key=key)
+            logging.info("Objeto %s/%s deletado com sucesso", self.bucket_name, key)
+        except ClientError as e:
+            logging.error("Erro ao deletar objeto do S3: %s", e)
+            raise e

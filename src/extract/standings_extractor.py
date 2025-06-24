@@ -1,4 +1,4 @@
-from scripts.extract.base_extractor import BaseExtractor
+from src.extract.base_extractor import BaseExtractor
 
 class StandingsExtractor(BaseExtractor):
     def get_standings(self):

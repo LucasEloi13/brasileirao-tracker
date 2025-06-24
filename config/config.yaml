@@ -1,5 +1,5 @@
 base_url: "https://api.football-data.org/v4"
-endpoint:
+endpoints:
   competitions: 
     path: /competitions
   competition_details:
